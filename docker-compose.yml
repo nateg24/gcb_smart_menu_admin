@@ -54,6 +54,21 @@ services:
       - ./app/sql/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
     restart: unless-stopped
     networks: [brew]
+  
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_USER: brew
+      PMA_PASSWORD: brewpass
+    depends_on:
+      - db
+    ports:
+      - "8081:80"
+    restart: unless-stopped
+    networks: [brew]
+
 
 volumes:
   dbdata:
