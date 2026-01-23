@@ -2,14 +2,14 @@
 <html>
 <head>
   <meta charset="utf-8" />
-  <title>Menu Display</title>
+  <title>Gnarly Cedar Tap Menu</title>
   <link rel="stylesheet" href="/assets/app.css">
   <link rel="stylesheet" href="/assets/app.css">
   <link rel="stylesheet" href="/assets/app.css">
 </head>
 <body class="display">
   <div class="top">
-    <h1 id="menuTitle">Menu</h1>
+    <h1 id="menuTitle">Gnarly Cedar Tap Menu</h1>
     <div class="meta">
       <div id="updatedAt"></div>
       <div id="qr"></div>

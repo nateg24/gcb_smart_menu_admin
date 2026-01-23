@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS menus (
   updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
-CREATE TABLE IF NOT EXISTS menu_items (
+CREATE TABLE IF NOT EXISTS menu_items_beer (
   id INT AUTO_INCREMENT PRIMARY KEY,
   menu_id INT NOT NULL,
   name VARCHAR(200) NOT NULL,
@@ -21,10 +21,10 @@ CREATE TABLE IF NOT EXISTS menu_items (
   CONSTRAINT fk_menu FOREIGN KEY (menu_id) REFERENCES menus(id) ON DELETE CASCADE
 );
 
-INSERT INTO menus (name) VALUES ('Main Menu');
+INSERT INTO menus (name) VALUES ('Gnarly Cedar Tap Menu');
 SET @menu_id = LAST_INSERT_ID();
 
-INSERT INTO menu_items (menu_id, name, style, abv, price, is_available, sort_order) VALUES
+INSERT INTO menu_items_beer (menu_id, name, style, abv, price, is_available, sort_order) VALUES
 (@menu_id, 'Hazy IPA', 'IPA', 6.50, 7.00, 1, 1),
 (@menu_id, 'Pilsner', 'Lager', 5.00, 6.00, 1, 2),
 (@menu_id, 'Stout', 'Stout', 7.20, 7.50, 1, 3);

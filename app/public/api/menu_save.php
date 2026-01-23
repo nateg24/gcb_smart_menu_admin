@@ -22,7 +22,7 @@ $menuId = 1;
 $pdo->beginTransaction();
 try {
   $stmt = $pdo->prepare("
-    UPDATE menu_items
+    UPDATE menu_items_beer
     SET name=?, style=?, abv=?, price=?, is_available=?, sort_order=?
     WHERE id=? AND menu_id=?
   ");

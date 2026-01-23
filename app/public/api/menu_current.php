@@ -17,7 +17,7 @@ if (!$menu) { http_response_code(404); echo json_encode(['error'=>'Menu not foun
 
 $i = $pdo->prepare("
   SELECT id, name, style, abv, price, is_available, sort_order
-  FROM menu_items
+  FROM menu_items_beer
   WHERE menu_id = ?
   ORDER BY sort_order ASC, id ASC
 ");
