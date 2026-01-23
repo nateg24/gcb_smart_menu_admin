@@ -1,0 +1,16 @@
+# dependencies
+app/vendor/
+app/composer.lock
+
+# env / secrets
+app/.env
+.env
+
+# docker / mysql
+dbdata/
+*.log
+
+# OS/editor
+.DS_Store
+.idea/
+.vscode/
