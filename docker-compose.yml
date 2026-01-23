@@ -1,0 +1,62 @@
+services:
+  nginx:
+    image: nginx:1.25-alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./app/public:/var/www/public:ro
+      - ./app/src:/var/www/src:ro
+      - ./app/vendor:/var/www/vendor:ro
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on: [php]
+    restart: unless-stopped
+    networks: [brew]
+
+  php:
+    build: { context: ./app }
+    environment:
+      APP_ENV: prod
+      DB_HOST: db
+      DB_NAME: brew_menu
+      DB_USER: brew
+      DB_PASS: brewpass
+      WS_INTERNAL_HOST: ws
+      WS_INTERNAL_PORT: 8090
+      WS_INTERNAL_TOKEN: change-me
+      PUBLIC_MENU_URL: http://3.137.136.13/menu.php
+    volumes:
+      - ./app:/var/www
+    depends_on: [db, ws]
+    restart: unless-stopped
+    networks: [brew]
+
+  ws:
+    build: { context: ./app }
+    command: ["php", "ws/server.php"]
+    environment:
+      WS_PORT: 8080
+      WS_INTERNAL_PORT: 8090
+      WS_INTERNAL_TOKEN: change-me
+    volumes:
+      - ./app:/var/www
+    restart: unless-stopped
+    networks: [brew]
+
+  db:
+    image: mysql:8.4
+    environment:
+      MYSQL_DATABASE: brew_menu
+      MYSQL_USER: brew
+      MYSQL_PASSWORD: brewpass
+      MYSQL_ROOT_PASSWORD: rootpass
+    volumes:
+      - dbdata:/var/lib/mysql
+      - ./app/sql/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+    restart: unless-stopped
+    networks: [brew]
+
+volumes:
+  dbdata:
+
+networks:
+  brew:

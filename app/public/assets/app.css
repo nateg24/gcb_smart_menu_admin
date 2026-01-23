@@ -1,0 +1,11 @@
+body { font-family: Arial, sans-serif; margin: 20px; }
+.display { margin: 0; padding: 24px; background: #111; color: #eee; }
+.display .top { display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; }
+.display h1 { margin: 0; font-size: 44px; }
+.display .meta { text-align: right; }
+.items { margin-top: 20px; display: grid; gap: 14px; }
+.item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; padding-bottom: 10px; }
+.item .name { font-size: 28px; font-weight: 700; }
+.item .sub { font-size: 16px; opacity: 0.8; margin-top: 2px; }
+.item .right { font-size: 26px; font-weight: 700; }
+input { width: 100%; }
