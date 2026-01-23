@@ -1,12 +1,12 @@
 <!doctype html>
 <html>
+
 <head>
   <meta charset="utf-8" />
   <title>Gnarly Cedar Tap Menu</title>
   <link rel="stylesheet" href="/assets/app.css">
-  <link rel="stylesheet" href="/assets/app.css">
-  <link rel="stylesheet" href="/assets/app.css">
 </head>
+
 <body class="display">
   <div class="top">
     <h1 id="menuTitle">Gnarly Cedar Tap Menu</h1>
@@ -31,7 +31,7 @@
 
     function escapeHtml(s) {
       return String(s).replace(/[&<>"']/g, c => ({
-        '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;'
       }[c]));
     }
 
@@ -42,28 +42,47 @@
       const items = data.items || [];
       currentVersion = menu.version;
 
-      document.getElementById('menuTitle').textContent = menu.name;
+      // document.getElementById('menuTitle').textContent = menu.name;
       document.getElementById('updatedAt').textContent = `Updated: ${menu.updated_at} (v${menu.version})`;
 
       const container = document.getElementById('items');
-      container.innerHTML = '';
+      container.innerHTML = `
+        <div class="menu-grid">
+          <section class="col col-house">
+            <div class="col-heading sr-only">House</div>
+            <div class="col-items" id="houseItems"></div>
+          </section>
+
+          <section class="col col-guest">
+            <div class="col-heading">GUEST TAPS</div>
+            <div class="col-items" id="guestItems"></div>
+          </section>
+        </div>
+      `;
+
+      const house = document.getElementById('houseItems');
+      const guest = document.getElementById('guestItems');
 
       for (const it of items) {
         if (!it.is_available) continue;
+
         const row = document.createElement('div');
         row.className = 'item';
 
         const left = document.createElement('div');
         left.innerHTML = `<div class="name">${escapeHtml(it.name)}</div>
-                          <div class="sub">${escapeHtml(it.style || '')} ${it.abv ? `• ${it.abv}%` : ''}</div>`;
+                          <div class="sub">${escapeHtml(it.style || '')}${it.abv ? ` - ${it.abv}%` : ''}</div>`;
 
         const right = document.createElement('div');
         right.className = 'right';
-        right.textContent = it.price ? `$${Number(it.price).toFixed(2)}` : '';
+        // poster shows numbers, not $7.00 – keep yours if you want dollars
+        right.textContent = it.price ? `${Number(it.price).toFixed(0)}` : '';
 
         row.appendChild(left);
         row.appendChild(right);
-        container.appendChild(row);
+
+        // IMPORTANT: this assumes API returns non_guest_tap (1=house, 0=guest)
+        (Number(it.non_guest_tap) === 1 ? house : guest).appendChild(row);
       }
 
       const qrEl = document.getElementById('qr');
@@ -81,11 +100,12 @@
           if (msg.type === 'menu_updated' && msg.version !== currentVersion) {
             await loadAndRender();
           }
-        } catch {}
+        } catch { }
       };
     }
 
     (async () => { await loadAndRender(); connectWs(); })();
   </script>
 </body>
+
 </html>

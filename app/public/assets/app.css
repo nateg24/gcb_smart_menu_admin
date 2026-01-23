@@ -1,11 +1,226 @@
-body { font-family: Arial, sans-serif; margin: 20px; }
-.display { margin: 0; padding: 24px; background: #111; color: #eee; }
-.display .top { display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; }
-.display h1 { margin: 0; font-size: 44px; }
-.display .meta { text-align: right; }
-.items { margin-top: 20px; display: grid; gap: 14px; }
-.item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; padding-bottom: 10px; }
-.item .name { font-size: 28px; font-weight: 700; }
-.item .sub { font-size: 16px; opacity: 0.8; margin-top: 2px; }
-.item .right { font-size: 26px; font-weight: 700; }
-input { width: 100%; }
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+.display {
+    margin: 0;
+    padding: 24px;
+    background: #111;
+    color: #eee;
+}
+
+.display .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.display h1 {
+    margin: 0;
+    font-size: 44px;
+}
+
+.display .meta {
+    text-align: right;
+}
+
+.items {
+    margin-top: 20px;
+    display: grid;
+    gap: 14px;
+}
+
+.item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #333;
+    padding-bottom: 10px;
+}
+
+.item .name {
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.item .sub {
+    font-size: 16px;
+    opacity: 0.8;
+    margin-top: 2px;
+}
+
+.item .right {
+    font-size: 26px;
+    font-weight: 700;
+}
+
+input {
+    width: 100%;
+}
+
+
+:root {
+    --olive: #5c5a2b;
+    --ink: #111;
+    --muted: #444;
+    --paper: #fff;
+}
+
+/* page */
+body.display {
+    margin: 0;
+    background: #dcdcdc;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    color: var(--ink);
+}
+
+.display .top {
+    max-width: 1200px;
+    margin: 18px auto 0;
+    padding: 14px 18px 10px;
+    background: var(--paper);
+    border-radius: 10px 10px 0 0;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, .12);
+}
+
+/* header text – poster vibe */
+#menuTitle {
+    margin: 0;
+    font-family: Impact, Haettenschweiler, "Arial Black", sans-serif;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    font-size: 56px;
+    line-height: 1;
+    color: var(--olive);
+}
+
+.display .meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 10px;
+    font-weight: 600;
+    color: var(--olive);
+}
+
+#updatedAt {
+    font-size: 14px;
+}
+
+#qr {
+    width: 128px;
+    height: 128px;
+}
+
+/* main container */
+#items.items {
+    max-width: 1200px;
+    margin: 0 auto 18px;
+    padding: 18px 22px 22px;
+    background: var(--paper);
+    border-radius: 0 0 10px 10px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, .12);
+}
+
+/* watermark (optional) – put image at /assets/watermark.png */
+#items.items::after {
+    content: "";
+    position: absolute;
+    inset: -40px -40px -40px -40px;
+    background: url("/assets/watermark.png") no-repeat right center / 60%;
+    opacity: .10;
+    pointer-events: none;
+}
+
+/* two columns like the poster */
+.menu-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 46px;
+    position: relative;
+    z-index: 1;
+}
+
+/* headings */
+.col-heading {
+    font-family: Impact, Haettenschweiler, "Arial Black", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: .18em;
+    font-size: 44px;
+    text-align: center;
+    margin: 6px 0 18px;
+}
+
+.sr-only {
+    position: absolute !important;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* items (matches your existing DOM) */
+.item {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 0;
+    margin: 0 0 16px;
+}
+
+.item .name {
+    font-family: Impact, Haettenschweiler, "Arial Black", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    font-size: 26px;
+    line-height: 1.05;
+}
+
+.item .sub {
+    margin-top: 4px;
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.2;
+    max-width: 520px;
+}
+
+.item .right {
+    font-family: Impact, Haettenschweiler, "Arial Black", sans-serif;
+    font-size: 22px;
+    min-width: 34px;
+    text-align: right;
+    color: #2a2a2a;
+    padding-top: 2px;
+}
+
+/* Make it big and readable on a TV */
+@media (max-width: 980px) {
+    #menuTitle {
+        font-size: 42px;
+    }
+
+    .menu-grid {
+        grid-template-columns: 1fr;
+        gap: 26px;
+    }
+
+    .col-heading {
+        font-size: 36px;
+    }
+
+    .item .name {
+        font-size: 24px;
+    }
+}

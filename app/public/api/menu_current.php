@@ -16,10 +16,10 @@ $menu = $m->fetch();
 if (!$menu) { http_response_code(404); echo json_encode(['error'=>'Menu not found']); exit; }
 
 $i = $pdo->prepare("
-  SELECT id, name, style, abv, price, is_available, sort_order
+  SELECT id, name, style, abv, price, is_available, non_guest_tap, sort_order
   FROM menu_items_beer
   WHERE menu_id = ?
-  ORDER BY sort_order ASC, id ASC
+  ORDER BY non_guest_tap DESC, sort_order ASC, name ASC
 ");
 $i->execute([$menuId]);
 
