@@ -2,7 +2,7 @@ services:
   nginx:
     image: nginx:1.25-alpine
     ports:
-      - "80:80"
+      - "8088:80"
     volumes:
       - ./app/public:/var/www/public:ro
       - ./app/src:/var/www/src:ro
@@ -16,7 +16,7 @@ services:
     build: { context: ./app }
     environment:
       APP_ENV: prod
-      DB_HOST: db
+      DB_HOST: 18.224.212.211
       DB_NAME: brew_menu
       DB_USER: brew
       DB_PASS: brewpass
@@ -26,6 +26,7 @@ services:
       PUBLIC_MENU_URL: http://3.137.136.13/menu.php
     volumes:
       - ./app:/var/www
+      - /var/www/vendor
     depends_on: [db, ws]
     restart: unless-stopped
     networks: [brew]
@@ -34,11 +35,12 @@ services:
     build: { context: ./app }
     command: ["php", "ws/server.php"]
     environment:
-      WS_PORT: 8080
+      WS_PORT: 8088
       WS_INTERNAL_PORT: 8090
       WS_INTERNAL_TOKEN: change-me
     volumes:
       - ./app:/var/www
+      - /var/www/vendor
     restart: unless-stopped
     networks: [brew]
 
